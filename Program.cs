@@ -25,4 +25,18 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.Use(async (context, next) =>
+{
+    // Do work that can write to the Response.
+
+    if (context.Request.Path == "/")
+    {
+        context.Response.Redirect("/api/todos");
+    }
+    else{
+        await next.Invoke();
+    }
+    
+    // Do logging or other work that doesn't write to the Response.
+});
 app.Run();
