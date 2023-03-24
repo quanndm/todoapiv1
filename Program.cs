@@ -19,7 +19,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}else
+{
+    app.UseHsts();
 }
+app.UseCors(builder => builder
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials().SetIsOriginAllowed(origin => true));
 
 app.UseAuthorization();
 

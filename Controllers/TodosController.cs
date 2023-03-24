@@ -46,13 +46,15 @@ namespace TodoApi.Controllers
             var todo = new Todo()
             {
                 Content = todoDto.Content,
-                IsDone = false
+                IsDone = false, 
+                Title = todoDto.Title ?? "",
+                Category = todoDto.Category ?? ""
             };
 
             _context.Todos!.Add(todo);
             await _context.SaveChangesAsync();
 
-            return StatusCode(201, new {message = "Created!"});
+            return StatusCode(201, new {todo});
         }
 
         // PUT api/<TodosController>/5
@@ -66,7 +68,7 @@ namespace TodoApi.Controllers
             if(todo == null) return NotFound();
 
             todo.Content = todoDto.Content;
-
+            todo.Last_update = DateTime.Now.ToString();
             await _context.SaveChangesAsync();
 
             return NoContent();
