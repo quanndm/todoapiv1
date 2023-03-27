@@ -37,6 +37,16 @@ namespace TodoApi.Controllers
             return Ok(todo);
         }
 
+        [HttpGet("{id}/change_status")]
+        public async Task<IActionResult> ChangeStatus([FromRoute]string id)
+        {
+            var todo = await _context.Todos!.SingleOrDefaultAsync(x=>x.Id == id);
+            if (todo == null) return NotFound();
+            todo.IsDone = !todo.IsDone;
+            await _context.SaveChangesAsync();
+
+            return Ok(new {message =  "Updated"});
+        }
         // POST api/<TodosController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] TodoDto todoDto)
