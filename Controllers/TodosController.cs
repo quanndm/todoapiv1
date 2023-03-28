@@ -77,7 +77,9 @@ namespace TodoApi.Controllers
 
             if(todo == null) return NotFound();
 
+            todo.Title = todoDto.Title ?? "";
             todo.Content = todoDto.Content;
+            todo.Category = todoDto.Category ?? "LATELY";
             todo.Last_update = DateTime.Now.ToString();
             await _context.SaveChangesAsync();
 
